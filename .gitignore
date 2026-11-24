@@ -1,0 +1,6 @@
+/.dev/
+/bin/
+/obj/
+*.user
+*.dll
+*.zip

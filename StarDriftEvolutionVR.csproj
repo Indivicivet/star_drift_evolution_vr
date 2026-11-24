@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net35</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <PlatformTarget>x86</PlatformTarget>
+    <GameDirectory Condition="'$(GameDirectory)' == ''">C:/Program Files (x86)/Steam/steamapps/common/Star Drift Evolution</GameDirectory>
+    <BepInExDirectory Condition="'$(BepInExDirectory)' == ''">$(GameDirectory)/BepInEx</BepInExDirectory>
+    <ManagedDirectory>$(GameDirectory)/StarDriftEvolution_Data/Managed</ManagedDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove=".dev/**/*.cs" />
+    <Reference Include="Assembly-CSharp" HintPath="$(ManagedDirectory)/Assembly-CSharp.dll" Private="false" />
+    <Reference Include="UnityEngine" HintPath="$(ManagedDirectory)/UnityEngine.dll" Private="false" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(ManagedDirectory)/UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="BepInEx" HintPath="$(BepInExDirectory)/core/BepInEx.dll" Private="false" />
+  </ItemGroup>
+
+  <Target Name="CheckGameReferences" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('$(ManagedDirectory)/Assembly-CSharp.dll')" Text="Set GameDirectory to the folder containing StarDriftEvolution.exe." />
+    <Error Condition="!Exists('$(BepInExDirectory)/core/BepInEx.dll')" Text="Install BepInEx 5 or set BepInExDirectory to the extracted BepInEx folder." />
+  </Target>
+</Project>
